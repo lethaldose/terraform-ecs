@@ -1,5 +1,6 @@
 provider "aws" {
-  region = "eu-west-1"
+  # region = "eu-west-1"
+  region  = "${var.region}"
 }
 
 module "ecs" {
@@ -18,11 +19,16 @@ module "ecs" {
   key_name             = "${aws_key_pair.ecs.key_name}"
   instance_type        = "${var.instance_type}"
   ecs_aws_ami          = "${var.ecs_aws_ami}"
+  bastion_aws_ami      = "${var.bastion_aws_ami}"
 }
 
 resource "aws_key_pair" "ecs" {
   key_name   = "ecs-key-${var.environment}"
   public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCtMljjj0Ccxux5Mssqraa/iHHxheW+m0Rh17fbd8t365y9EwBn00DN/0PjdU2CK6bjxwy8BNGXWoUXiSDDtGqRupH6e9J012yE5kxhpXnnkIcLGjkAiflDBVV4sXS4b3a2LSXL5Dyb93N2GdnJ03FJM4qDJ8lfDQxb38eYHytZkmxW14xLoyW5Hbyr3SXhdHC2/ecdp5nLNRwRWiW6g9OA6jTQ3LgeOZoM6dK4ltJUQOakKjiHsE+jvmO0hJYQN7+5gYOw0HHsM+zmATvSipAWzoWBWcmBxAbcdW0R0KvCwjylCyRVbRMRbSZ/c4idZbFLZXRb7ZJkqNJuy99+ld41 ecs@aws.fake"
+}
+
+variable "region" {
+  description = "Region that the instances will be created"
 }
 
 variable "vpc_cidr" {}
@@ -32,6 +38,7 @@ variable "min_size" {}
 variable "desired_capacity" {}
 variable "instance_type" {}
 variable "ecs_aws_ami" {}
+variable "bastion_aws_ami" {}
 
 variable "private_subnet_cidrs" {
   type = "list"

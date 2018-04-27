@@ -80,3 +80,7 @@ variable "cloudwatch_prefix" {
   default     = ""
   description = "If you want to avoid cloudwatch collision or you don't want to merge all logs to one log group specify a prefix"
 }
+
+variable "bastion_aws_ami" {
+  description = "The AWS ami id to use for Bastion Host"
+}
