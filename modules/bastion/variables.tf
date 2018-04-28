@@ -17,7 +17,7 @@ variable "instance_type" {
 
 variable "public_subnet_ids" {
   type        = "list"
-  description = "The list of private subnets to place the instances in"
+  description = "The list of vpc public subnets to place the instances in"
 }
 
 variable "key_name" {

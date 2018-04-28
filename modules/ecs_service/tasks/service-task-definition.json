@@ -1,0 +1,30 @@
+[
+  {
+    "name": "${service_name}",
+    "image": "${image}",
+    "portMappings": [
+      {
+        "containerPort": "${container_port}"
+      }
+    ],
+    "image": "${docker_image}:${docker_tag}",
+    "cpu": "${container_cpu}",
+    "memory": "${container_memory}",
+    "networkMode": "awsvpc",
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-region": "${region}",
+        "awslogs-group": "${log_group_name}",
+        "awslogs-region": "${log_group_region}",
+        "awslogs-stream-prefix": "${service_name}"
+      }
+    },
+    "environment": [
+      {
+        "name": "NODE_ENV",
+        "value": "test"
+      }
+    ]
+  }
+]

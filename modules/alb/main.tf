@@ -13,6 +13,7 @@ resource "aws_alb_target_group" "default" {
   }
 
   tags {
+    Name = "${var.environment}-alb-target-group"
     Environment = "${var.environment}"
   }
 }
@@ -23,6 +24,7 @@ resource "aws_alb" "alb" {
   security_groups = ["${aws_security_group.alb.id}"]
 
   tags {
+    Name = "${var.environment}-alb"
     Environment = "${var.environment}"
   }
 }
@@ -43,6 +45,7 @@ resource "aws_security_group" "alb" {
   vpc_id = "${var.vpc_id}"
 
   tags {
+    Name = "${var.environment}-alb-sg"
     Environment = "${var.environment}"
   }
 }

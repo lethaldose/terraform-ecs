@@ -7,7 +7,7 @@ variable "cluster" {
   description = "The name of the ECS cluster"
 }
 
-variable "prefix" {
+variable "ssm_parameter_prefix" {
   default     = ""
-  description = "The prefix of the parameters this role should be able to access"
+  description = "The prefix of the ssm parameters this role should be able to access"
 }

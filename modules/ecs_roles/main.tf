@@ -37,16 +37,16 @@ data "template_file" "policy" {
     {
       "Action": ["ssm:GetParameters"],
       "Effect": "Allow",
-      "Resource": "arn:aws:ssm:$${aws_region}:$${account_id}:parameter/$${prefix}*"
+      "Resource": "arn:aws:ssm:$${aws_region}:$${account_id}:parameter/$${ssm_parameter_prefix}*"
     }
   ]
 }
 EOF
 
   vars {
-    account_id = "${data.aws_caller_identity.current.account_id}"
-    prefix     = "${var.prefix}"
-    aws_region = "${data.aws_region.current.name}"
+    account_id            = "${data.aws_caller_identity.current.account_id}"
+    ssm_parameter_prefix  = "${var.ssm_parameter_prefix}"
+    aws_region            = "${data.aws_region.current.name}"
   }
 }
 
@@ -62,3 +62,5 @@ resource "aws_iam_policy_attachment" "ecs_default_task" {
   roles      = ["${aws_iam_role.ecs_default_task.name}"]
   policy_arn = "${aws_iam_policy.ecs_default_task.arn}"
 }
+
+# ---
