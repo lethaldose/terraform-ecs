@@ -7,6 +7,7 @@ module "ecs" {
   source = "modules/ecs"
 
   environment          = "${var.environment}"
+  region               = "${var.region}"
   cluster              = "${var.environment}"
   cloudwatch_prefix    = "${var.environment}"           #See ecs_instances module when to set this and when not!
   vpc_cidr             = "${var.vpc_cidr}"

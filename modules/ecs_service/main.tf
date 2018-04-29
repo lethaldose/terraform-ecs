@@ -3,7 +3,7 @@ resource "aws_ecr_repository" "ecr_repo" {
 }
 
 resource "aws_cloudwatch_log_group" "service_log_group" {
-  name = "{var.environment}-{var.service}-log-group"
+  name = "${var.environment}-${var.service_name}-log"
 
   tags {
     Environment = "${var.environment}"
@@ -27,18 +27,13 @@ data "template_file" "service_task" {
 
 # The host port is dynamically chosen from the ephemeral port range of the
 # container instance (such as 32768 to 61000 on the latest Amazon ECS-optimized AMI)
-
+# https://docs.aws.amazon.com/AmazonECS/latest/developerguide/load-balancer-types.html
 resource "aws_ecs_task_definition" "service_task_definition" {
-  family                   = "${var.environment}-{var.service_name}-service"
+  family                   = "${var.environment}-${var.service_name}-td"
   container_definitions    = "${data.template_file.service_task.rendered}"
   cpu                      = "${var.container_cpu}"
   memory                   = "${var.container_memory}"
   task_role_arn            = "${module.ecs_roles.ecs_task_role_arn}"
-
-  tags {
-    Environment = "${var.environment}"
-    Application = "${var.service_name}"
-  }
 }
 
 resource "aws_ecs_service" "ecs_service" {
@@ -53,11 +48,6 @@ resource "aws_ecs_service" "ecs_service" {
     container_name = "${var.service_name}"
     container_port = "${var.container_port}"
   }
-
-  tags {
-    Environment = "${var.environment}"
-    Application = "${var.service_name}"
-  }
 }
 
 module "ecs_roles" {
@@ -65,7 +55,7 @@ module "ecs_roles" {
 
   environment          = "${var.environment}"
   cluster              = "${var.cluster_name}"
-  ssm_parameter_prefix = "${var.service_name}"
+  ssm_parameter_prefix = "${var.environment}/${var.service_name}"
 }
 
 # --

@@ -5,5 +5,5 @@ output "ecs_task_role_arn" {
 
 # ECS service role for ECS to manage the load balancer associated with the service
 output "ecs_service_role_arn" {
-  value = "${aws_iam_role.ecs-service-role.arn}"
+  value = "${aws_iam_role.ecs_service_role.arn}"
 }

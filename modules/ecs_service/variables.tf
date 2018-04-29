@@ -40,10 +40,6 @@ variable "desired_count" {
 
 #-- will come from tf remote config
 
-variable "ecs_service_role_arn" {
-  description = "ECS ALB Service role"
-}
-
 variable "alb_target_group_arn" {
   description = "ALB Target group arn for routing"
 }
